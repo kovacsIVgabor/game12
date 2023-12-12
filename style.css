@@ -1,0 +1,31 @@
+#gamearea div {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  /* cursor: pointer; */
+  cursor: pointer;
+  user-select: none;
+}
+#gamearea {
+  border: 1px solid black;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
+#container {
+  display: grid;
+  /* tehát itt a három oszlop 1:4:1 arányúak */
+  grid-template-columns: 1fr 4fr 1fr;
+}
+.rejtett {
+  visibility: hidden;
+}
+
+#szamlalo {
+  font-size: 30px;
+  text-align: center;
+}
