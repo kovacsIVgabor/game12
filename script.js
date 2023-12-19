@@ -26,6 +26,13 @@ for (let i = 0; i < 12; i++) {
     if (szamDoboz.innerText == nextNumber) {
       szamDoboz.classList.add('rejtett')
       nextNumber++
+      //itt miután rákattintunk egy számra és az eltűnik, és az volt az utolsó, akkor
+      //kell megállítani a számlálót.
+      //A setInterval -lal létrehozott időzítő, az időzítő azonosítójának birtokában,
+      //A clearInterval paranccsal állítható le.
+      if (nextNumber == 13) {
+        clearInterval(idozito)
+      }
     }
   })
 }
@@ -40,9 +47,11 @@ const szamlalo = document.querySelector('#szamlalo')
 //A megadott számú milliszekundumonként.
 //tehát az alábbi példa másodpercenként futtatja a megadott anonimusz függvényt.
 let ido = 0
-setInterval(function () {
-  szamlalo.innerText = ido
-  ido++
-}, 1000)
 
-//A következő lépés lesz a számláló elindítása és megállítása, egyelőre írjátok meg ezt a részt.
+//A setintervalnak van egy azonosítója, amit elmentünk az 'idozito' nevű változóba.
+//mivel a programunk legkülső buborékában vagyunk az itt létrehozott változókat mindenhonnan
+//elérjük: az idozito globális változó
+const idozito = setInterval(function () {
+  szamlalo.innerText = ido / 10
+  ido++
+}, 100)
