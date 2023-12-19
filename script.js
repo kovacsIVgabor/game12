@@ -1,7 +1,7 @@
 const gameArea = document.querySelector('#gamearea')
 const startButton = document.querySelector('#start')
 const szamlalo = document.querySelector('#szamlalo')
-let ido = 0
+let ido
 let t = []
 let idozito
 let nextNumber
@@ -68,7 +68,10 @@ initNumbers()
 createBoxes()
 
 startButton.addEventListener('click', function () {
+  clearInterval(idozito)
   nextNumber = 1
+  ido = 0
   shuffleNumbers()
   fillShowBoxes()
+  startTimer()
 })
