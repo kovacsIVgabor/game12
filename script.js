@@ -1,15 +1,19 @@
 const gameArea = document.querySelector('#gamearea')
 const startButton = document.querySelector('#start')
-
+const szamlalo = document.querySelector('#szamlalo')
+let ido = 0
 let t = []
-
+let idozito
+let nextNumber
+//--------- feltöltünk egy 12 elemű tömböt számokkal 1-től 12-ig
 function initNumbers() {
-  //#region --------------------------------------------------------- feltöltünk egy 12 elemű tömböt számokkal 1-től 12-ig
   for (let i = 0; i < 12; i++) {
     t.push(i + 1)
   }
-  //#endregion -----------------------------------------------------
-  //#region --------------------------------------------------------- keverés
+}
+
+//------ keverés
+function shuffleNumbers() {
   for (let i = 0; i < 100; i++) {
     let pos1 = Math.floor(Math.random() * 12)
     let pos2 = Math.floor(Math.random() * 12)
@@ -17,47 +21,54 @@ function initNumbers() {
     t[pos1] = t[pos2]
     t[pos2] = temp
   }
-  //#endregion -----------------------------------------------------
 }
 
-//#region ----------------------------------------------------------- 12db számdoboz létrehozása
-let nextNumber = 1
-for (let i = 0; i < 12; i++) {
-  let szamDoboz = document.createElement('div')
-  szamDoboz.innerText = t[i]
-  szamDoboz.classList.add('rejtett')
-  gameArea.appendChild(szamDoboz)
+//-- 12db számdoboz létrehozása
+function createBoxes() {
+  for (let i = 0; i < 12; i++) {
+    let szamDoboz = document.createElement('div')
+    // szamDoboz.innerText = t[i]
+    szamDoboz.classList.add('rejtett')
+    gameArea.appendChild(szamDoboz)
 
-  szamDoboz.addEventListener('click', function () {
-    if (szamDoboz.innerText == nextNumber) {
-      szamDoboz.classList.add('rejtett')
-      nextNumber++
-      //itt miután rákattintunk egy számra és az eltűnik, és az volt az utolsó, akkor
-      //kell megállítani a számlálót.
-      //A setInterval -lal létrehozott időzítő, az időzítő azonosítójának birtokában,
-      //A clearInterval paranccsal állítható le.
-      if (nextNumber == 13) {
-        clearInterval(idozito)
+    szamDoboz.addEventListener('click', function () {
+      if (szamDoboz.innerText == nextNumber) {
+        szamDoboz.classList.add('rejtett')
+        nextNumber++
+        //itt miután rákattintunk egy számra és az eltűnik, és az volt az utolsó, akkor
+        //kell megállítani a számlálót.
+        //A setInterval -lal létrehozott időzítő, az időzítő azonosítójának birtokában,
+        //A clearInterval paranccsal állítható le.
+        if (nextNumber == 13) {
+          clearInterval(idozito)
+        }
       }
-    }
-  })
+    })
+  }
 }
-//#endregion ---------------------------------------------------------
+function fillShowBoxes() {
+  const szamDobozok = gameArea.querySelectorAll('div')
+  let i = 0
+  for (szamDoboz of szamDobozok) {
+    szamDoboz.innerText = t[i]
+    szamDoboz.classList.remove('rejtett')
+    i++
+  }
+}
 
-//szóval kellene egy számláló
+function startTimer() {
+  idozito = setInterval(function () {
+    szamlalo.innerText = ido / 10
+    ido++
+  }, 100)
+}
 
-const szamlalo = document.querySelector('#szamlalo')
+//--------------------------------------- Main
+initNumbers()
+createBoxes()
 
-//A setInterval függvény az első paraméterben megadott függvényt hívja meg,
-//A második paraméterben megadott számú (oké nem tudtam, hogy van magyarul :-) Szóval
-//A megadott számú milliszekundumonként.
-//tehát az alábbi példa másodpercenként futtatja a megadott anonimusz függvényt.
-let ido = 0
-
-//A setintervalnak van egy azonosítója, amit elmentünk az 'idozito' nevű változóba.
-//mivel a programunk legkülső buborékában vagyunk az itt létrehozott változókat mindenhonnan
-//elérjük: az idozito globális változó
-const idozito = setInterval(function () {
-  szamlalo.innerText = ido / 10
-  ido++
-}, 100)
+startButton.addEventListener('click', function () {
+  nextNumber = 1
+  shuffleNumbers()
+  fillShowBoxes()
+})
