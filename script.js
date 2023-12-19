@@ -1,25 +1,31 @@
 const gameArea = document.querySelector('#gamearea')
+const startButton = document.querySelector('#start')
 
-//#region --------------------------------------------------------- feltöltünk egy 12 elemű tömböt számokkal 1-től 12-ig
 let t = []
-for (let i = 0; i < 12; i++) {
-  t.push(i + 1)
+
+function initNumbers() {
+  //#region --------------------------------------------------------- feltöltünk egy 12 elemű tömböt számokkal 1-től 12-ig
+  for (let i = 0; i < 12; i++) {
+    t.push(i + 1)
+  }
+  //#endregion -----------------------------------------------------
+  //#region --------------------------------------------------------- keverés
+  for (let i = 0; i < 100; i++) {
+    let pos1 = Math.floor(Math.random() * 12)
+    let pos2 = Math.floor(Math.random() * 12)
+    let temp = t[pos1]
+    t[pos1] = t[pos2]
+    t[pos2] = temp
+  }
+  //#endregion -----------------------------------------------------
 }
-//#endregion -----------------------------------------------------
-//#region --------------------------------------------------------- keverés
-for (let i = 0; i < 100; i++) {
-  let pos1 = Math.floor(Math.random() * 12)
-  let pos2 = Math.floor(Math.random() * 12)
-  let temp = t[pos1]
-  t[pos1] = t[pos2]
-  t[pos2] = temp
-}
-//#endregion -----------------------------------------------------
+
 //#region ----------------------------------------------------------- 12db számdoboz létrehozása
 let nextNumber = 1
 for (let i = 0; i < 12; i++) {
   let szamDoboz = document.createElement('div')
   szamDoboz.innerText = t[i]
+  szamDoboz.classList.add('rejtett')
   gameArea.appendChild(szamDoboz)
 
   szamDoboz.addEventListener('click', function () {
