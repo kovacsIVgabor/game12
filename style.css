@@ -40,4 +40,6 @@ body {
 #szamlalo {
   font-size: 30px;
   text-align: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: white;
 }

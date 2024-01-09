@@ -58,10 +58,9 @@ function fillShowBoxes() {
 
 function startTimer() {
   idozito = setInterval(function () {
-    // szamlalo.innerText = ido / 10
     szamlalo.innerText = (ido / 10).toFixed(1)
     ido++
-  }, 1000)
+  }, 100)
 }
 
 //--------------------------------------- Main
